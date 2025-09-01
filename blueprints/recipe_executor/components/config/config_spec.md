@@ -50,6 +50,9 @@ The component loads these environment variables:
 - **AZURE_OPENAI_DEPLOYMENT_NAME** - (Optional) Deployment name for Azure OpenAI
 - **AZURE_USE_MANAGED_IDENTITY** - (Optional) Use Azure managed identity for authentication, defaults to False
 - **AZURE_CLIENT_ID** - (Optional) Client ID for Azure managed identity
+- **BEDROCK_AWS_REGION** - (Optional) aws region for AWS bedrock
+- **BEDROCK_AWS_ACCESS_KEY** - (Optional) aws access key on AWS bedrock
+- **BEDROCK_AWS_SECRET_KEY** - (Optional) aws secret key on AWS bedrock
 - **OLLAMA_BASE_URL** - (Optional) Base URL for Ollama API, defaults to "http://localhost:11434"
 
 ## Output Files

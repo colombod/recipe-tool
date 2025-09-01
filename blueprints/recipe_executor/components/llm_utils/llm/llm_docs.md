@@ -124,6 +124,7 @@ If no deployment name is provided, the model name is used as the deployment name
 - **azure**: Azure OpenAI models (e.g., `gpt-4o`, `gpt-4.1`, `o3`, `o4-mini`)
 - **azure**: Azure OpenAI models with custom deployment name (e.g., `gpt-4o/my_deployment_name`)
 - **anthropic**: Anthropic models (e.g., `claude-3-5-sonnet-latest`)
+- **bedrock**: AWS bedrock hosted models (e.g., `claude-3-5-sonnet-latest`)
 - **ollama**: Ollama models (e.g., `phi4`, `llama3.2`, `qwen2.5-coder:14b`)
 
 ## Error Handling
