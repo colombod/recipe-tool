@@ -36,6 +36,11 @@ class RecipeExecutorConfig(BaseSettings):
     # Ollama Settings
     ollama_base_url: str = Field(default="http://localhost:11434", alias="OLLAMA_BASE_URL")
 
+    # AWS Bedrock Credentials
+    bedrock_aws_region: Optional[str] = Field(default=None, alias="BEDROCK_AWS_REGION")
+    bedrock_aws_access_key: Optional[str] = Field(default=None, alias="BEDROCK_AWS_ACCESS_KEY")
+    bedrock_aws_secret_key: Optional[str] = Field(default=None, alias="BEDROCK_AWS_SECRET_KEY")
+
     model_config = SettingsConfigDict(
         env_prefix="RECIPE_EXECUTOR_",
         env_file=".env",
@@ -115,6 +120,9 @@ The Config component automatically loads these environment variables:
 | `AZURE_OPENAI_DEPLOYMENT_NAME` | Deployment name for Azure OpenAI   | None                     |
 | `AZURE_USE_MANAGED_IDENTITY`   | Use Azure managed identity         | false                    |
 | `AZURE_CLIENT_ID`              | Client ID for managed identity     | None                     |
+| `BEDROCK_AWS_REGION`           | AWS Bedrock Region                 | us-east-1                |
+| `BEDROCK_AWS_ACCESS_KEY`       | AWS Bedrock Access key             | None                     |
+| `BEDROCK_AWS_SECRET_KEY`       | AWS Bedrock Secret key             | None                     |
 | `OLLAMA_BASE_URL`              | Base URL for Ollama API            | "http://localhost:11434" |
 
 ## Recipe-Specific Variables

@@ -24,10 +24,11 @@ The LLM component provides a unified interface for interacting with various larg
   - Anthropic: Create AnthropicProvider with api_key from context, pass to AnthropicModel
   - Azure: Handled by get_azure_openai_model function
   - Ollama: Create OpenAIProvider with base_url from context
+  - Bedrock: Create BedrockProcider with region, secret_key and access_key from context, pass to BedrockConverseModel
 - Use PydanticAI's provider-specific model classes:
   - pydantic_ai.models.openai.OpenAIModel (used also for Azure OpenAI and Ollama)
   - pydantic_ai.models.openai.OpenAIResponsesModel (used for OpenAI Responses API and Azure Responses API)
-  - pydantic_ai.models.anthropic.AnthropicModel
+  - pydantic_ai.models.bedrock.BedrockConverseModel (used for Bedrock hosted models)
 - For `openai_responses` provider: call `get_openai_responses_model(logger, model_name)` passing the logger instance and model name
 - For `azure_responses` provider: call `get_azure_responses_model(logger, model_name, deployment_name)` passing the logger instance, model name and deployment name
 - Create a PydanticAI Agent with the model, structured output type, and optional MCP servers
@@ -58,7 +59,7 @@ The LLM component provides a unified interface for interacting with various larg
 Create a PydanticAI model for the LLM provider and model name:
 
 ```python
-def get_model(model_id: str, context: ContextProtocol) -> Union[OpenAIModel, AnthropicModel, OpenAIResponsesModel]:
+def get_model(model_id: str, context: ContextProtocol) -> Union[OpenAIModel, AnthropicModel, OpenAIResponsesModel, BedrockConverseModel]:
     """
     Initialize an LLM model based on a standardized model_id string.
     Expected format: 'provider/model_name' or 'provider/model_name/deployment_name'.
@@ -67,6 +68,7 @@ def get_model(model_id: str, context: ContextProtocol) -> Union[OpenAIModel, Ant
     - openai
     - azure (for Azure OpenAI, use 'azure/model_name/deployment_name' or 'azure/model_name')
     - anthropic
+    - bedrock
     - ollama
     - openai_responses (for OpenAI Responses API with built-in tools)
     - azure_responses (for Azure Responses API with built-in tools)
@@ -101,6 +103,10 @@ openai_model = get_model("openai/gpt-4o", context)
 # Get an Anthropic model
 anthropic_model = get_model("anthropic/claude-3-5-sonnet-latest", context)
 # Uses AnthropicModel('claude-3-5-sonnet-latest') with API key from context.get_config().get('anthropic_api_key')
+
+# Get an bedrock model
+anthropic_model = get_model("bedrock/claude-3-5-sonnet-latest", context)
+# Uses BedrockConverseModel('claude-3-5-sonnet-latest') with Secret key from context.get_config().get('bedrock_aws_secret_key'), Access KEY from from context.get_config().get('bedrock_aws_access_key') ,and region from context.get_config().get('bedrock_aws_region')
 
 # Get an Ollama model
 ollama_model = get_model("ollama/phi4", context)
@@ -178,6 +184,9 @@ return OpenAIModel(
 - **context.config** - All configuration is accessed through the context:
   - `openai_api_key`: (Required for OpenAI) API key for OpenAI access
   - `anthropic_api_key`: (Required for Anthropic) API key for Anthropic access
+  - `bedrock_aws_region`: (Required for Bedrock) REGION for bedrock access
+  - `bedrock_aws_access_key`: (Required for Bedrock) ACCESS key for bedrock access
+  - `bedrock_aws_secret_key`: (Required for Bedrock) SECRET key for bedrock access
   - `ollama_base_url`: (Required for Ollama) Endpoint for Ollama models
   - `azure_*`: Azure OpenAI configuration values (handled by azure_openai component)
 
